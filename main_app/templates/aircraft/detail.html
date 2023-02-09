@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Aircraft Details</h1>
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ aircraft.type }}</span>
+        <p>Engines: {{ aircraft.engines }}</p>
+        <p>N Number: {{ aircraft.n_num }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'aircraft_update' aircraft.id %}">Edit</a>
+        <a href="{% url 'aircraft_delete' aircraft.id %}">Delete</a>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

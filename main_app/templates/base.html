@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Fleet Manager</title>
+
+    <!-- CSS Framework CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" /> <!-- CSS override local file -->
+    <!--        JQuery CDN           -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+        <nav class="white">
+                {% comment %} <div class="nav-wrapper">
+                    <a href="/" class="right brand-logo"> <img src="https://i.imgur.com/d2vqKl7.jpg" width="63" height="63"></a>
+                </div> {% endcomment %}
+                <div class="nav-wrapper">
+                    <ul>
+                      <li>
+                        <a href="/" class="right brand-logo">  <img src="https://i.imgur.com/d2vqKl7.jpg" width="63" height="63"></a>
+                      </li>
+                    </ul>
+                    <ul class="right">
+                        <li><a class="black-text"></a></li>
+                        <li><a class="black-text"></a></li>
+                        <li><a class="black-text"></a></li>
+                        <li><a class="black-text">Powered On:</a></li>
+                    </ul>
+                </div>
+        </nav>
+    </header>
+
+    <!-- Nav Bar -->
+    
+        <ul id="slide-out" class="sidenav sidenav-fixed ">
+            <li>
+            <div class="user-view">
+                <a href="/"><img src="https://i.imgur.com/L1AhWlp.png" width="90%"></a>
+            </div>
+            </li>
+            <div class="listels">
+                <li><a href="/about">About</a></li>
+
+                {% if user.is_authenticated %}
+                <li><div class="divider"></div></li>
+                <li><a class="subheader">Fleet Manager</a></li>
+                <li><a href="/aircraft">Aircraft List</a></li>
+                <li><a href="">Maintenance Items</a></li>
+
+                <li><div class="divider"></div></li>
+                <li><a class="subheader">My Account</a></li>
+                <li><a href="{% url 'logout' %}">Log Out</a></li>
+
+                {% else %}
+                <li><div class="divider"></div></li>
+                <li><a class="subheader">My Account</a></li>
+
+                <li><a href="{% url 'login' %}">Log In</a></li>
+                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+
+                {% endif %}
+            </div>
+        </ul>
+    
+
+    <!-- Main Class (extends to other templates) -->
+    <main class="container">{% block content %} {% endblock %}</main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="right">
+        All Rights Reserved, © 2023 FlyNow Fleet Manager
+      </div>
+    </footer>
+  </body>
+
+</html>

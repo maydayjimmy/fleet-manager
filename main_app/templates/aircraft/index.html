@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Aircraft List</h1>
+<a href="{% url 'aircraft_create' %}">Add an Aircraft</a>
+{% for aircraft in aircrafts %}
+<div class="card">
+  <a href="{% url 'detail' aircraft.id %}"> 
+    {% comment %} 'detail' is from the 'name attribute in urls.py' {% endcomment %}
+    <div class="card-content">
+      <span class="card-title">{{ aircraft.type }}</span>
+      <p>Engines: {{ aircraft.engines }}</p>
+      <p>N Number: {{ aircraft.n_num }}</p>
+    </div>
+  </a>
+</div>
+{% endfor %} {% endblock %}
