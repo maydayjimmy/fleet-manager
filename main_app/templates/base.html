@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,15 +8,33 @@
     <title>Fleet Manager</title>
 
     <!-- CSS Framework CDN -->
-    <link
+     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" /> <!-- CSS override local file -->
+    /> 
+
     <!--        JQuery CDN           -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <style>
+      div.emptyspace{
+        height: 100px;
+      }
+      
+      body.about{
+        background-image: url("https://i.imgur.com/JAwdfkb.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: white;
+      }
+
+      main, footer {
+        padding-left: 240px;
+      }
+    </style>
   </head>
+
 
   <body>
     <!-- Header -->
@@ -67,7 +85,7 @@
                 <li><a class="subheader">My Account</a></li>
 
                 <li><a href="{% url 'login' %}">Log In</a></li>
-                <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                <li><a href="{% url 'signup' %}">Register</a></li>
 
                 {% endif %}
             </div>
@@ -77,12 +95,13 @@
     <!-- Main Class (extends to other templates) -->
     <main class="container">{% block content %} {% endblock %}</main>
 
-    <!-- Footer -->
+    <!-- Footer 
     <footer class="page-footer grey lighten-4">
       <div class="right black-text">
         All Rights Reserved, © 2023 FlyNow Fleet Manager
       </div>
     </footer>
   </body>
+  -->
 
 </html>

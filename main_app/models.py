@@ -16,6 +16,17 @@ class Item(models.Model):
     def get_absolute_url(self):
         return reverse("detail", kwargs={'pk': self.id})
 
+#     def create_page(self):
+#         "Adds a page to the book"
+#         #Do what you need to do
+#         page = Page(name="TitlePage", Book=self)
+#         page.save()
+
+# class Complete(models.Model):
+#     date = models.DateField()
+
+#     Item= models.ForeignKey("Item", on_delete=models.CASCADE)
+
 class Aircraft(models.Model):
     type = models.CharField(max_length=100)
     n_num = models.CharField(max_length=6)
