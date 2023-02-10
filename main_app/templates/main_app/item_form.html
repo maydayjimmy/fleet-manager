@@ -6,7 +6,7 @@
     {% if object %}
     <h1> Edit <span class="teal-text">{{ object.name }}</span></h1>
     {% else %}
-    <h1>Add Aircraft</h1>
+    <h1>Add Maintenance Item</h1>
     {% endif %}
 
     <table>
@@ -16,9 +16,9 @@
 
 </form>
 
-<!-- Datepicker tool on Aircraft Form -->
+<!-- Datepicker tool on Item Form -->
 <script>
-    var dateEl = document.getElementById('id_mfr_date');
+    var dateEl = document.getElementById('id_completed');
     M.Datepicker.init(dateEl, {
       format: 'yyyy-mm-dd',
       defaultDate: new Date(),

@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>Item Details</h1>
+{% comment %} Must access objects using "object" not "item" {% endcomment %}
+<div class="card">
+    <div class="card-content">
+        <div class="card-content">
+            <span class="card-title">
+                {{object.name}}
+            </span>
+            <li>Last Date Completed: {{object.completed}}</li>
+            <li>Required Interval: Every {{object.interval}} Days</li>
+        </div>
+    </div>
+    <div class="card-action">
+        <a href="{% url 'item_update' object.id %}">Edit</a>
+        <a href="{% url 'item_delete' object.id %}">Delete</a>
+    </div>
+</div>    
+
+
+{% endblock %}

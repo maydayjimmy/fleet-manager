@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<h1>Delete Aircraft</h1>
+<h1>Delete Maintenance Item</h1>
 
 <h4>
   Are you sure you want to delete
@@ -9,6 +9,6 @@
 <form action="" method="POST">
   {% csrf_token %}
   <input type="submit" value="Delete Item" class="btn" />
-  <a href="{% url 'detail' aircraft.id %}">Cancel</a>
+  <a href="{% url 'item_index' %}">Cancel</a>
 </form>
 {% endblock %}

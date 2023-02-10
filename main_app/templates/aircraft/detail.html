@@ -16,4 +16,119 @@
     </div>
 </div>
 
+<!-- Table to display flights -->
+<div class="col s6">
+
+  <!-- Creates form to add a new flight -->
+  <form  action="{% url 'add_flight' aircraft.id %}" method="post">
+    {% csrf_token %} {{ flight_form.as_p }}
+    <input type="submit" class="btn" value="Add Flight" />
+  </form>
+
+  <table class="striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Departure</th>
+        <th>Destination</th>
+        <th>Flight Distance</th>
+        <th>Fuel Used</th>
+        <th>Fuel Remaining</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for flight in aircraft.flight_set.all %}
+      <tr>
+        <td>{{flight.date}}</td>
+        <td>{{flight.dep}}</td>
+        <td>{{flight.dest}}</td>
+        <td>{{flight.distance}} mi</td>
+        <td>{{flight.fuel_used}} gal</td>
+        <td>{{flight.fuel_rem}} gal</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+ <!-- Displaying Completed Maintenance -->
+<hr />
+<div class="row">
+  <div class="col s6">
+    <h3> Completed Maintenance Items </h3>
+
+    {% if aircraft.items.count %} {% for item in aircraft.items.all %}
+
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          Work Order: {{item.name}}
+        </span>
+          <li>Last Date Completed: {{item.date}}</li>
+          <li>Required Interval: Every {{item.interval}} Days</li>
+          <!-- NEED TO CREATE STATUS-->
+          <li>Status: Complete</li>
+        </span>
+      </div>
+    </div>
+
+    {% endfor %} {% else %}
+
+    <h5> No Completed Maintenance </h5>
+
+    {% endif %}
+  </div>
+</div>
+<!-- ////////////////////////////////////////////////// -->
+
+<!-- Displaying Required Maintenance -->
+<div class="col s6">
+  <h3>Required Maintenance Items</h3>
+  <script>console.log(items)</script>
+  {% if required_items.count %}
+    {% for item in required_items %}
+
+      <div class="card">
+
+        <div class="card-content">
+          <span class="card-title">
+            Work Order: {{item.name}}
+          </span>
+            <li>Last Date Completed: {{item.date}}</li>
+            <li>Required Interval: Every {{item.interval}} Days</li>
+            <!-- NEED TO CREATE STATUS-->
+            <li>Status: Complete</li>
+        </div>
+
+        <!-- NEED (if current days is longer than interval, then can't complete)-->
+        <!-- ALSO NEED date picker to modify model when completed-->
+        <div class="card-action">
+          <form action="{% url 'assoc_item' aircraft.id item.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn">Complete Item</button>
+          </form>
+        </div>
+
+      </div>
+
+    {% endfor %}
+  {% else %}
+
+    <h5> No Required Maintenance </h5>
+  {% endif %}
+</div>
+<!-- ////////////////////////////////////////////////// -->
+
+
+<!-- Datepicker tool on Flight Form -->
+<script>
+  var dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'yyyy-mm-dd',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+</script>
+
 {% endblock %}

@@ -1,16 +1,37 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>Aircraft List</h1>
-<a href="{% url 'aircraft_create' %}">Add an Aircraft</a>
-{% for aircraft in aircrafts %}
-<div class="card">
-  <a href="{% url 'detail' aircraft.id %}"> 
-    {% comment %} 'detail' is from the 'name attribute in urls.py' {% endcomment %}
-    <div class="card-content">
-      <span class="card-title">{{ aircraft.type }}</span>
-      <p>Engines: {{ aircraft.engines }}</p>
-      <p>N Number: {{ aircraft.n_num }}</p>
-    </div>
-  </a>
-</div>
-{% endfor %} {% endblock %}
+<h4>Current Fleet</h4>
+<a class="btn-floating btn-small waves-effect waves-light blue right" href="{% url 'aircraft_create' %}">+</a>
+
+<table class="highlight responsive-table">
+  <thead>
+    <tr>
+        <th>Date Modified</th>
+        <th>N Number</th>
+        <th>Aircraft Type</th>
+        <th>MSN</th>
+        <th>Age</th>
+        <th>Airworthiness</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    {% for aircraft in aircrafts %}
+    <tr>
+      <td>2023-12-02</td>
+      <td>{{aircraft.n_num}}</td>
+      <td>{{aircraft.type}}</td>
+      <td>{{aircraft.msn}}</td>
+      <td>{{aircraft.mfr_date}}</td>
+      <td>Needs Attention</td>
+      <td><a class="waves-effect waves-light btn-small grey darken-2" href="{% url 'detail' aircraft.id %}">View</a></td>
+    </tr>
+
+    {% endfor %} 
+
+  </tbody>
+
+</table>
+
+{% endblock %}
