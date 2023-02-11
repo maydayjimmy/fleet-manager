@@ -1,89 +1,76 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>Aircraft Details</h1>
+<h4>{{ aircraft.n_num }}</h4>
 <div class="row">
-  <div class="col s6">
+  <div class="col s12">
     <div class="card">
-      <div class="card-content">
-        <span class="card-title">{{ aircraft.type }}</span>
-        <p>Engines: {{ aircraft.engines }}</p>
-        <p>N Number: {{ aircraft.n_num }}</p>
+      <div class="grad card-content">
+
+        <h5>Aircraft Type: <div class="right">{{ aircraft.type }}</div> </h5>
+
+        <h5>Number of Engines: <div class="right">{{ aircraft.engines }}</div> </h5>
+
+        <h5>Manufacturer Serial Number: <div class="right">{{ aircraft.msn }}</div> </h5>
+
+        <h5>Manufacturer Date: <div class="right">{{ aircraft.mfr_date }}</div> </h5>
+        
+        <div class="card-action">
+          <a class= "right blue-text" href="{% url 'aircraft_update' aircraft.id %}">Edit</a>
+          <a class= "right red-text" href="{% url 'aircraft_delete' aircraft.id %}">Delete Aircraft</a>
+        </div>
       </div>
-      <div class="card-action">
-        <a href="{% url 'aircraft_update' aircraft.id %}">Edit</a>
-        <a href="{% url 'aircraft_delete' aircraft.id %}">Delete</a>
-      </div>
-    </div>
+    </div>   
+  </div> 
 </div>
 
 <!-- Table to display flights -->
-<div class="col s6">
-
-  <!-- Creates form to add a new flight -->
-  <form  action="{% url 'add_flight' aircraft.id %}" method="post">
-    {% csrf_token %} {{ flight_form.as_p }}
-    <input type="submit" class="btn" value="Add Flight" />
-  </form>
-
-  <table class="striped">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Departure</th>
-        <th>Destination</th>
-        <th>Flight Distance</th>
-        <th>Fuel Used</th>
-        <th>Fuel Remaining</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for flight in aircraft.flight_set.all %}
-      <tr>
-        <td>{{flight.date}}</td>
-        <td>{{flight.dep}}</td>
-        <td>{{flight.dest}}</td>
-        <td>{{flight.distance}} mi</td>
-        <td>{{flight.fuel_used}} gal</td>
-        <td>{{flight.fuel_rem}} gal</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
- <!-- Displaying Completed Maintenance -->
-<hr />
 <div class="row">
-  <div class="col s6">
-    <h3> Completed Maintenance Items </h3>
+  <div class="col s12">
 
-    {% if aircraft.items.count %} {% for item in aircraft.items.all %}
+    <div class="divider"></div>
 
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">
-          Work Order: {{item.name}}
-        </span>
-          <li>Last Date Completed: {{item.completed}}</li>
-          <li>Required Interval: Every {{item.interval}} Days</li>
-          <!-- NEED TO CREATE STATUS-->
-          <li>Status: Complete</li>
-        </span>
-      </div>
-    </div>
+    <h4>Flight History</h4>
+    <table class="striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Departure</th>
+          <th>Destination</th>
+          <th>Flight Distance</th>
+          <th>Fuel Used</th>
+          <th>Fuel Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for flight in aircraft.flight_set.all %}
+        <tr>
+          <td>{{flight.date}}</td>
+          <td>{{flight.dep}}</td>
+          <td>{{flight.dest}}</td>
+          <td>{{flight.distance}} mi</td>
+          <td>{{flight.fuel_used}} gal</td>
+          <td>{{flight.fuel_rem}} gal</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-    {% endfor %} {% else %}
+    <!-- Creates form to add a new flight -->
+    <div class="divider"></div>
+    <h4>Add a Flight Log</h4>
+    <form  action="{% url 'add_flight' aircraft.id %}" method="post">
+      {% csrf_token %} {{ flight_form.as_p }}
+      <input type="submit" class="btn blue right" value="Add Flight" />
+    </form>
 
-    <h5> No Completed Maintenance </h5>
-
-    {% endif %}
   </div>
 </div>
-<!-- ////////////////////////////////////////////////// -->
 
+<hr />
+<div class="row">
 <!-- Displaying Required Maintenance -->
 <div class="col s6">
-  <h3>Required Maintenance Items</h3>
+  <h3>Required Maintenance</h3>
   <script>console.log(items)</script>
   {% if required_items.count %}
     {% for item in required_items %}
@@ -94,18 +81,14 @@
           <span class="card-title">
             Work Order: {{item.name}}
           </span>
-            <li>Last Date Completed: {{item.completed}}</li>
-            <li>Required Interval: Every {{item.interval}} Days</li>
-            <!-- NEED TO CREATE STATUS-->
-            <li>Status: Complete</li>
+            <li> Required Interval: Every {{item.interval}} Days</li>
+            <li class="red-text">Status: Incomplete</li>
         </div>
 
-        <!-- NEED (if current days is longer than interval, then can't complete)-->
-        <!-- ALSO NEED date picker to modify model when completed-->
         <div class="card-action">
           <form action="{% url 'assoc_item' aircraft.id item.id %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn">Complete Item</button>
+            <button type="submit" class="blue btn">Complete Item</button>
           </form>
         </div>
 
@@ -113,11 +96,38 @@
 
     {% endfor %}
   {% else %}
-
     <h5> No Required Maintenance </h5>
   {% endif %}
 </div>
 <!-- ////////////////////////////////////////////////// -->
+
+ <!-- Displaying Completed Maintenance -->
+<div class="col s6">
+  <h3> Completed Maintenance</h3>
+
+  {% if aircraft.items.count %} 
+  {% for item in aircraft.items.all %}
+
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">
+        Work Order: {{item.name}}
+      </span>
+        <li>Required Interval: Every {{item.interval}} Days</li>
+        <li class="green-text">Status: Complete</li>
+      </span>
+    </div>
+  </div>
+
+  {% endfor %} {% else %}
+
+  <h5> No Completed Maintenance </h5>
+
+  {% endif %}
+</div>
+<!-- ////////////////////////////////////////////////// -->
+</div>
+
 
 
 <!-- Datepicker tool on Flight Form -->

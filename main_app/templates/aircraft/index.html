@@ -6,11 +6,10 @@
 <table class="highlight responsive-table">
   <thead>
     <tr>
-        <th>Date Modified</th>
         <th>N Number</th>
         <th>Aircraft Type</th>
         <th>MSN</th>
-        <th>Age</th>
+        <th>Year Manufactured</th>
         <th>Airworthiness</th>
     </tr>
   </thead>
@@ -19,12 +18,17 @@
     
     {% for aircraft in aircrafts %}
     <tr>
-      <td>2023-12-02</td>
       <td>{{aircraft.n_num}}</td>
       <td>{{aircraft.type}}</td>
       <td>{{aircraft.msn}}</td>
       <td>{{aircraft.mfr_date}}</td>
-      <td>Needs Attention</td>
+
+      {% if aircraft.items.count%}
+      <td class="green-text">Maintenance Completed</td>
+      {% else %}
+      <td class="red-text">Needs Attention</td>
+      {% endif %}
+
       <td><a class="waves-effect waves-light btn-small grey darken-2" href="{% url 'detail' aircraft.id %}">View</a></td>
     </tr>
 

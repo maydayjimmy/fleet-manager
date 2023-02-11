@@ -22,7 +22,10 @@ def about(request):
 @login_required
 def aircraft_index(request):
     aircrafts = Aircraft.objects.filter(user=request.user)
-    return render(request, 'aircraft/index.html', { 'aircrafts': aircrafts })
+
+    return render(request, 'aircraft/index.html', { 
+      'aircrafts': aircrafts
+    })
 
 @login_required
 def aircraft_detail(request, aircraft_id):
